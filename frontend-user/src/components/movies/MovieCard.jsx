@@ -1,6 +1,22 @@
+import { useState } from 'react';
 import Button from '../common/Button';
+import MovieDescription from './MovieDescription';
 
-function MovieCard({ movie }) {
+
+function MovieCard({ movie, onAddToCart }) {
+  const [likes, setLikes] = useState(() => Math.floor(Math.random() * 100));
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = (e) => {
+    e.stopPropagation();
+    if (isLiked) {
+      setLikes(likes - 1);
+    } else {
+      setLikes(likes + 1);
+    }
+    setIsLiked(!isLiked);
+  };
+
   // Couleurs par genre
   const genreColors = {
   'Action': 'bg-red-500',
@@ -49,18 +65,32 @@ function MovieCard({ movie }) {
           <span className="text-gray-400">{movie.duration}min</span>
         </div>
         
-        <p className="text-sm text-gray-300 mb-4 line-clamp-2">
-          {movie.description}
-        </p>
+        <MovieDescription description={movie.description} />
         
         <div className="flex flex-col sm:flex-row gap-2">
-          <Button size="sm" className="flex-1">
+          <Button 
+            size="sm" 
+            className="flex-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart(movie);
+            }}
+          >
             ▶ Louer {movie.price}€
           </Button>
 
           <Button variant="outline" size="sm" className="flex-1">
             + Info
           </Button>
+
+          <button 
+            onClick={handleLike}
+            className={`px-4 py-2 rounded transition-colors duration-300 flex items-center justify-center gap-2 ${
+              isLiked ? 'bg-red-500 text-white' : 'bg-gray-700/80 text-gray-200 hover:bg-gray-600'
+            }`}
+          >
+            {isLiked ? '❤️' : '🤍'} {likes}
+          </button>
         </div>
       </div>
       

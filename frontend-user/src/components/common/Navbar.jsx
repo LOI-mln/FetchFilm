@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import SearchBar from './SearchBar';
+import MovieSearchBar from '../movies/MovieSearchBar';
+import CartButton from './CartButton';
 
 
-function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+function Navbar({ movies, onSearch, cartItems, onRemoveFromCart }) {
+  const [isScrolled] = useState(false);
   // Note : useEffect sera vu au TP 03
   // Pour l'instant, version statique
 
@@ -43,8 +44,14 @@ function Navbar() {
           </div>
 
           {/* User Section */}
-          <div className="flex items-center space-x-4">
-               <SearchBar />
+          <div className="flex items-center space-x-6">
+               <MovieSearchBar movies={movies} onSearch={onSearch} />
+               
+               <CartButton 
+                 cartItems={cartItems} 
+                 onRemoveFromCart={onRemoveFromCart} 
+               />
+
             {/* User Avatar */}
             <div className="w-8 h-8 bg-primary rounded flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors">
               <span className="text-sm font-bold">U</span>

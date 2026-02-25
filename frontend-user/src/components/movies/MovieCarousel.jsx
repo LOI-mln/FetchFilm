@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import MovieCard from "./MovieCard";
 
-function MovieCarousel({ title, movies }) {
+function MovieCarousel({ title, movies, onAddToCart }) {
   const scrollContainerRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -58,7 +58,7 @@ function MovieCarousel({ title, movies }) {
         {/* Pour chaque film */}
         {movies.map((movie) => (
           <div key={movie.id} className="shrink-0 w-48">
-            <MovieCard movie={movie} />
+            <MovieCard movie={movie} onAddToCart={onAddToCart} />
           </div>
         ))}
         {/* Fin Pour chaque film */}
